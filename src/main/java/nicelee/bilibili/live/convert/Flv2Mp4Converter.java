@@ -18,10 +18,8 @@ public class Flv2Mp4Converter {
         FFmpegProbeResult probe = ffprobe.probe(path);
         System.out.println(probe.getFormat().bit_rate);
         FFmpegBuilder builder = new FFmpegBuilder()
-
                 .setInput(path)     // Filename, or a FFmpegProbeResult
                 .overrideOutputFiles(true) // Override the output if it exists
-
                 .addOutput(path.split("\\.")[0]+path.split("\\.")[1]+"."+format)   // Filename for the destination
                 .setFormat(format)        // Format is inferred from filename, or can be set
                 .setVideoBitRate(probe.getFormat().bit_rate)
@@ -31,7 +29,7 @@ public class Flv2Mp4Converter {
         FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
 
 // Run a one-pass encode
-        executor.createJob(builder).run();
+//        executor.createJob(builder).run();
 
 // Or run a two-pass encode (which is better quality at the cost of being slower)
         executor.createTwoPassJob(builder).run();
