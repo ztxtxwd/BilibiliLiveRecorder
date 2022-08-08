@@ -200,7 +200,7 @@ public class Config {
 	/**
 	 * 从配置文件 + 参数字符串中取出值 "key1=value1&key2=value2 ..."
 	 * 
-	 * @param args
+	 * @param param
 	 * @param key
 	 */
 	public static String getValue(String param, String key) {
