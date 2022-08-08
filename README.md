@@ -27,38 +27,39 @@ Go go go, Bilibili Pikachu!
     `java -Dfile.encoding=utf-8 -jar BiliLiveRecorder.jar "debug=false&check=false&delete=false&liver=douyu&id=233233&qn=0&retry=5"`  
 + 各参数意义  
 
-| Key  | 必选 | 释义 | 
-| ------------- | ------------- | ------------- |  
-| options  | 否 | json配置文件位置。支持相对/绝对路径。默认`config.json` |  
-| charset  | 否 | json配置文件编码格式。默认`UTF-8` |  
-| debug  | 否 | debug模式,输出更多信息。默认false |  
-| check  | 否 | 下载完后是否校准时间戳，默认true |  
-| delete  | 否 | 校准后是否删除源文件，默认true |  
-| zip  | 否 | 是否压缩成zip文件，默认false |  
-| liver  | 是 | 将要录制的直播源。 详见下表 | 
-| id  | 否 | 直播房间id，如未传入，后续将提示输入。 | 
-| qn  | 否 | 直播视频清晰度。不同网站值意义不同。-1代表最高清晰度。 |   
-| qnPri  | 否 | 直播视频清晰度优先级。分隔符`>` 例: `蓝光4M>蓝光>超清` 蓝光4M优先级最高 | 
-| retry  | 否 | 异常导致录制停止后的重试次数。默认5次 |   
-| fileSize  | 否 | 分段录制的参考文件大小，0为不按文件大小分段，单位`MB`。默认0 |   
-| filePeriod  | 否 | 分段录制的参考时长，0为不按时长分段，单位`min`。默认0 |   
-| proxy  | 否 | 按需配置。http(s)代理 e.g. `127.0.0.1:8888` |   
-| socksProxy  | 否 | 按需配置。socks代理 e.g. `127.0.0.1:1080` |   
-| trustAllCert  | 否 | 是否无条件信任所有SSL证书。默认false |   
-| splitScriptTags  | 否 | 校准文件时是否分割ScriptTag。默认false | 
-| splitAVHeaderTags  | 否 | 校准文件时是否分割a/v header Tag时。默认与splitScriptTags一致 |  
-| maxAudioHeaderSize  | 否 | 当Audio tag的data size小于该值时，认为是audio header。默认`10` | 
-| maxVideoHeaderSize  | 否 | 当Video tag的data size小于该值时，认为是video header。默认`60`  | 
+| Key  | 必选 | 释义                                                      | 
+| ------------- | ------------- |---------------------------------------------------------|  
+| options  | 否 | json配置文件位置。支持相对/绝对路径。默认`config.json`                    |  
+| charset  | 否 | json配置文件编码格式。默认`UTF-8`                                  |  
+| debug  | 否 | debug模式,输出更多信息。默认false                                  |  
+| check  | 否 | 下载完后是否校准时间戳，默认true                                      |  
+| delete  | 否 | 校准后是否删除源文件，默认true                                       |  
+| zip  | 否 | 是否压缩成zip文件，默认false                                      |  
+| liver  | 是 | 将要录制的直播源。 详见下表                                          | 
+| id  | 否 | 直播房间id，如未传入，后续将提示输入。                                    | 
+| qn  | 否 | 直播视频清晰度。不同网站值意义不同。-1代表最高清晰度。                            |   
+| qnPri  | 否 | 直播视频清晰度优先级。分隔符`>` 例: `蓝光4M>蓝光>超清` 蓝光4M优先级最高             | 
+| retry  | 否 | 异常导致录制停止后的重试次数。默认5次                                     |   
+| fileSize  | 否 | 分段录制的参考文件大小，0为不按文件大小分段，单位`MB`。默认0                       |   
+| filePeriod  | 否 | 分段录制的参考时长，0为不按时长分段，单位`min`。默认0                          |   
+| proxy  | 否 | 按需配置。http(s)代理 e.g. `127.0.0.1:8888`                    |   
+| socksProxy  | 否 | 按需配置。socks代理 e.g. `127.0.0.1:1080`                      |   
+| trustAllCert  | 否 | 是否无条件信任所有SSL证书。默认false                                  |   
+| splitScriptTags  | 否 | 校准文件时是否分割ScriptTag。默认false                              | 
+| splitAVHeaderTags  | 否 | 校准文件时是否分割a/v header Tag时。默认与splitScriptTags一致           |  
+| maxAudioHeaderSize  | 否 | 当Audio tag的data size小于该值时，认为是audio header。默认`10`        | 
+| maxVideoHeaderSize  | 否 | 当Video tag的data size小于该值时，认为是video header。默认`60`        | 
 | fileName  | 否 | 文件命名规则，默认`{name}-{shortId} 的{liver}直播{startTime}-{seq}` | 
-| timeFormat  | 否 | 文件命名中{startTime}和{endTime}的格式，默认`yyyy-MM-dd HH.mm` | 
-| saveFolder  | 否 | 源文件保存路径 | 
-| saveFolderAfterCheck  | 否 | FLV文件校准后的保存路径，check为true时有效。默认为空，此时与`saveFolder`等同 | 
-| stopAfterOffline  | 否 | 当目标下播后，是否停止程序。为false时，需要和下面三个参数配合。默认true | 
-| retryIfLiveOff  | 否 | 当目标不在直播时，是否继续重试。默认false | 
-| maxRetryIfLiveOff  | 否 | 当目标不在直播时，继续重试的次数。默认0，此时会一直进行尝试，直到主播上线 | 
-| retryAfterMinutes  | 否 | 当目标不在直播时，每次获取直播间信息的时间间隔，单位分钟。默认`5.0` | 
-| failRetryAfterMinutes  | 否 | 当连接出现异常时，下次尝试录制的时间间隔，单位分钟。默认`1.0` | 
-| plugin  | 否 | 插件功能，允许用户自定义某些操作。默认false |  
+| timeFormat  | 否 | 文件命名中{startTime}和{endTime}的格式，默认`yyyy-MM-dd HH.mm`      | 
+| saveFolder  | 否 | 源文件保存路径                                                 | 
+| saveFolderAfterCheck  | 否 | FLV文件校准后的保存路径，check为true时有效。默认为空，此时与`saveFolder`等同      | 
+| stopAfterOffline  | 否 | 当目标下播后，是否停止程序。为false时，需要和下面三个参数配合。默认true                | 
+| retryIfLiveOff  | 否 | 当目标不在直播时，是否继续重试。默认false                                 | 
+| maxRetryIfLiveOff  | 否 | 当目标不在直播时，继续重试的次数。默认0，此时会一直进行尝试，直到主播上线                   | 
+| retryAfterMinutes  | 否 | 当目标不在直播时，每次获取直播间信息的时间间隔，单位分钟。默认`5.0`                    | 
+| failRetryAfterMinutes  | 否 | 当连接出现异常时，下次尝试录制的时间间隔，单位分钟。默认`1.0`                       | 
+| plugin  | 否 | 插件功能，允许用户自定义某些操作。默认false                                |   
+| format  | 否 | 输出文件格式。默认为不转换格式                                         |  
 
 + 各直播源解析情况  
 

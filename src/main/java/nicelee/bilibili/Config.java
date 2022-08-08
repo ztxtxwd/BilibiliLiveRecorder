@@ -46,6 +46,9 @@ public class Config {
 	@Option(name = "liver", defaultValue = "bili")
 	public static String liver;
 
+	@Option(name = "format", defaultValue = "")
+	public static String outputFormat;
+
 	@Option(name = "id", defaultValue = "")
 	public static String shortId;
 

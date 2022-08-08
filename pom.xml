@@ -57,6 +57,11 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.bramp.ffmpeg</groupId>
+			<artifactId>ffmpeg</artifactId>
+			<version>0.7.0</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 			<groupId>org.json</groupId>

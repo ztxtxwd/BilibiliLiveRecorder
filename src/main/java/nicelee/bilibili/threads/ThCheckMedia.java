@@ -25,7 +25,7 @@ public class ThCheckMedia extends Thread {
 	List<String> fileList;
 	Plugin plugin;
 	Lock lock;
-	
+
 	public ThCheckMedia(RoomDealer roomDealer, List<String> fileList, Lock lock, Plugin plugin) {
 		this.roomDealer = roomDealer;
 		this.fileList = fileList;
@@ -37,17 +37,22 @@ public class ThCheckMedia extends Thread {
 	
 	@Override
 	public void run() {
-		
+
 		System.out.println("处理文件中");
 		lock.lock();
 		if (".flv".equals(roomDealer.getType())) {
 			if (Config.autoCheck) {
 				try {
+					int count=0;
 					for (String path : fileList) {
 						System.out.println("校对时间戳开始...");
 						new FlvCheckerWithBufferEx().check(path, Config.deleteOnchecked, Config.splitScriptTagsIfCheck,
 								Config.splitAVHeaderTagsIfCheck, Config.saveFolderAfterCheck);
+
+						Thread th = new ThConvert(roomDealer, fileList, plugin,count);
+						th.start();
 						System.out.println("校对时间戳完毕。");
+						count++;
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -74,6 +79,9 @@ public class ThCheckMedia extends Thread {
 								String path_i = path.replaceFirst(".flv$", "-checked" + count + ".flv");
 								f = new File(path_i);
 							}
+
+							Thread th = new ThConvert(roomDealer, fileList, plugin,count);
+							th.start();
 							if (f.exists())
 								filesAll.add(f);
 							else
@@ -107,11 +115,12 @@ public class ThCheckMedia extends Thread {
 //				dstFile.getParentFile().delete();
 //				System.out.println("合并结束...");
 		}
-		
+
 		lock.unlock();
 		//System.exit(1);
 	}
 	
+	@Deprecated
 	static void record(RoomDealer roomDealer, RoomInfo roomInfo, String url, List<String> fileList) {
 		SimpleDateFormat sdf = new SimpleDateFormat(Config.timeFormat);
 		// "{name}-{shortId} 的{liver}直播{startTime}-{seq}";
