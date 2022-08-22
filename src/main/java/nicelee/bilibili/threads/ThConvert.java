@@ -6,6 +6,7 @@ import nicelee.bilibili.live.check.FlvCheckerWithBufferEx;
 import nicelee.bilibili.live.convert.Flv2Mp4Converter;
 import nicelee.bilibili.plugin.Plugin;
 import nicelee.bilibili.util.ZipUtil;
+import nicelee.bilibili.模型.录制参数;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,22 +21,31 @@ public class ThConvert extends Thread {
     List<String> fileList;
     Plugin plugin;
     int count;
+    录制参数 录制参数儿;
+    @Deprecated
     public ThConvert(RoomDealer roomDealer, List<String> fileList,  Plugin plugin,int count) {
         this.roomDealer = roomDealer;
         this.fileList = fileList;
         this.plugin = plugin;
         this.count = count;
     }
+    public ThConvert(RoomDealer roomDealer, List<String> fileList,  Plugin plugin,int count,录制参数 录制参数儿) {
+        this.roomDealer = roomDealer;
+        this.fileList = fileList;
+        this.plugin = plugin;
+        this.count = count;
+        this.录制参数儿=录制参数儿;
+    }
 
     @Override
     public void run() {
         System.out.println("文件转码中");
         if (".flv".equals(roomDealer.getType())) {
-            if (!"".equals(Config.outputFormat)){
+            if (!"".equals(录制参数儿.outputFormat)){
                 try {
                     for (String path : fileList) {
                         System.out.println("文件转码开始...");
-                        new Flv2Mp4Converter().convert(path, Config.outputFormat,count);
+                        new Flv2Mp4Converter().convert(path, 录制参数儿.outputFormat,count);
                         System.out.println("文件转码完毕。");
                     }
                 } catch (IOException e) {

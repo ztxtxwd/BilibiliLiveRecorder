@@ -106,7 +106,7 @@ public class Logger {
 	}
 	/**
 	 * 测试用
-	 * @param str
+	 * @param obj
 	 */
 	public static void println(Object obj) {
 		if(!debug) {
